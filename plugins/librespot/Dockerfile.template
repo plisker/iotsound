@@ -12,11 +12,13 @@ RUN apk add --no-cache \
     libvorbis-dev \
     flac-dev
 
-# Pinned to a commit on plisker/go-librespot @ dj-clean-clip-fix (not a branch name):
+# Pinned to a commit on plisker/go-librespot @ deploy-clean (not a branch name):
 # reproducible builds, and bumping the SHA busts balena's git-clone layer cache so a
 # new fork commit is actually picked up. Bump this on each fork change.
+# deploy-clean = devgianlu/master + pulseaudio start-clip fix (#292) + context-metadata
+# & set_queue "Next from:" fixes (#329). No DJ fork; DJ mode is not supported on this base.
 RUN git clone https://github.com/plisker/go-librespot.git /go-librespot \
-    && git -C /go-librespot checkout f98e2aa7c9eeebae3534d89071dda32ec8d341c2
+    && git -C /go-librespot checkout 6b8467fc7313b1161ce5166960a27c741a8ae737
 WORKDIR /go-librespot
 RUN go mod download
 RUN go build -v -o /daemon ./cmd/daemon
