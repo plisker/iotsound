@@ -12,7 +12,11 @@ RUN apk add --no-cache \
     libvorbis-dev \
     flac-dev
 
-RUN git clone --branch dj-clean-clip-fix https://github.com/plisker/go-librespot.git /go-librespot
+# Pinned to a commit on plisker/go-librespot @ dj-clean-clip-fix (not a branch name):
+# reproducible builds, and bumping the SHA busts balena's git-clone layer cache so a
+# new fork commit is actually picked up. Bump this on each fork change.
+RUN git clone https://github.com/plisker/go-librespot.git /go-librespot \
+    && git -C /go-librespot checkout 0be28bb3512edb66bbfe4658da3d7e1a276d5e0f
 WORKDIR /go-librespot
 RUN go mod download
 RUN go build -v -o /daemon ./cmd/daemon
