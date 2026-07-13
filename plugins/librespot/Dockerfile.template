@@ -18,7 +18,7 @@ RUN apk add --no-cache \
 # deploy-clean = devgianlu/master + pulseaudio start-clip fix (#292) + context-metadata
 # & set_queue "Next from:" fixes (#329). No DJ fork; DJ mode is not supported on this base.
 RUN git clone https://github.com/plisker/go-librespot.git /go-librespot \
-    && git -C /go-librespot checkout 6b8467fc7313b1161ce5166960a27c741a8ae737
+    && git -C /go-librespot checkout 3f5eb78c019b17fceeb10a4a7871f24115bc6b9b
 WORKDIR /go-librespot
 RUN go mod download
 RUN go build -v -o /daemon ./cmd/daemon
